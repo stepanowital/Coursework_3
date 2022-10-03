@@ -1,10 +1,18 @@
 import json
-
+from json import JSONDecodeError
 
 def get_posts_all():
-	with open("data/posts.json", "r", encoding="utf-8") as file:
-		posts = json.load(file)
-		return posts
+	try:
+		with open("data/posts.json", "r", encoding="utf-8") as file:
+			posts = json.load(file)
+			return posts
+	except FileNotFoundError:
+		print("Файл posts.json не найден")
+	except JSONDecodeError:
+		print("Файл posts.json не удаётся преобразовать")
+
+
+# get_posts_all()
 
 
 def get_posts_by_user(user_name):
@@ -27,8 +35,8 @@ def get_comments_by_post_id(post_id):
 	for post in posts:
 		if post["pk"] == post_id:
 			is_post_real = True
-	if not is_post_real:
-		raise ValueError("Такого поста не существует")
+	# if not is_post_real:
+	# 	raise ValueError("Такого поста не существует")
 
 	with open("data/comments.json", "r", encoding="utf-8") as file:
 		comments = json.load(file)
@@ -39,7 +47,7 @@ def get_comments_by_post_id(post_id):
 	return comments_by_post_id
 
 
-# print(get_comments_by_post_id(8))
+# print(get_comments_by_post_id(5))
 
 
 def search_for_posts(query):
