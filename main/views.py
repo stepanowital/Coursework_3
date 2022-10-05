@@ -29,7 +29,5 @@ def search_page():
 @main_blueprint.route('/users/<username>')
 def user_page(username):
     user_posts = get_posts_by_user(username)
-    print(user_posts)
     user_name = user_posts[1]['poster_name']
-    print(user_name)
     return render_template("user-feed.html", posts=user_posts, name=user_name)
