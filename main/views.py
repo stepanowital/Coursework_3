@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
-from utils import get_posts_all, get_post_by_pk, get_comments_by_post_id, search_for_posts
+# from utils import get_posts_all, get_post_by_pk, get_comments_by_post_id, search_for_posts
+from utils import *
 main_blueprint = Blueprint('main_blueprint', __name__)
 
 
@@ -23,3 +24,12 @@ def search_page():
     posts = search_for_posts(s)
     posts_len = len(posts)
     return render_template("search.html", posts=posts, s=s, posts_len=posts_len)
+
+
+@main_blueprint.route('/users/<username>')
+def user_page(username):
+    user_posts = get_posts_by_user(username)
+    print(user_posts)
+    user_name = user_posts[1]['poster_name']
+    print(user_name)
+    return render_template("user-feed.html", posts=user_posts, name=user_name)

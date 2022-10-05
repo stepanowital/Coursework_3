@@ -16,17 +16,18 @@ def get_posts_all():
 
 
 def get_posts_by_user(user_name):
-	user_post = []
+	user_posts = []
 	posts = get_posts_all()
 	for post in posts:
 		if post["poster_name"] == user_name:
-			user_post = post
-	if not user_post:
-		raise ValueError("Такого пользователя не существует")
-	return user_post
+			user_posts.append(post)
+	# if not user_post:
+	# 	raise ValueError("Такого пользователя не существует")
+	return user_posts
 
 
-# print(get_posts_by_user("le"))
+# print(get_posts_by_user("leo"))
+# print(get_posts_by_user("leo")[1]['poster_name'])
 
 
 def get_comments_by_post_id(post_id):
