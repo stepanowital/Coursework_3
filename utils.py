@@ -12,7 +12,7 @@ def get_posts_all():
 		print("Файл posts.json не удаётся преобразовать")
 
 
-get_posts_all()
+# get_posts_all()
 
 
 def get_posts_by_user(user_name):
