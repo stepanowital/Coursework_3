@@ -2,6 +2,7 @@ import json
 from json import JSONDecodeError
 
 def get_posts_all():
+	"""Возвращает все посты из файла posts.json"""
 	try:
 		with open("data/posts.json", "r", encoding="utf-8") as file:
 			posts = json.load(file)
@@ -16,6 +17,7 @@ def get_posts_all():
 
 
 def get_posts_by_user(user_name):
+	"""Возвращает все посты указанного пользователя"""
 	user_posts = []
 	posts = get_posts_all()
 	for post in posts:
@@ -31,6 +33,7 @@ def get_posts_by_user(user_name):
 
 
 def get_comments_by_post_id(post_id):
+	"""Возвращает все комментарии указанного поста"""
 	posts = get_posts_all()
 	is_post_real = False
 	for post in posts:
@@ -54,26 +57,32 @@ def get_comments_by_post_id(post_id):
 	return comments_by_post_id
 
 
-# print(get_comments_by_post_id(5))
+# print(get_comments_by_post_id(""))
 
 
 def search_for_posts(query):
+	"""Возвращает список постов по указанному слову"""
 	posts = get_posts_all()
 	posts_query = []
+	if not type(query) == str:
+		raise AttributeError("Введенный запрос не является типом 'STR'")
+	query_lower = query.lower()
 	for post in posts:
-		if query.lower() in post["content"].lower():
+		if query_lower in post["content"].lower():
 			posts_query.append(post)
 	return posts_query
 
 
-# print(search_for_posts(""))
+# print(search_for_posts(5))
 
 
 def get_post_by_pk(pk):
+	"""Возвращает пост по указанному номеру"""
 	posts = get_posts_all()
 	for post in posts:
 		if post["pk"] == pk:
 			return post
+	return {}
 
 
-# print(get_post_by_pk(8))
+# print(get_post_by_pk(""))
