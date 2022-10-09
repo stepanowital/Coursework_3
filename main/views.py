@@ -25,6 +25,10 @@ def page_index():
     return render_template("index.html", posts=posts)
 
 
+@main_blueprint.route('/<blabla>')
+def page_empty_index(blabla):
+    raise FileNotFoundError(f'Страницы с индексом "{blabla}" не существует - ошибка 404')
+
 
 @main_blueprint.route('/post/<int:postid>')
 def page_posts(postid):
@@ -61,3 +65,15 @@ def get_post_json_page(post_id):
     post = get_post_by_pk(post_id)
     api_logger.warning(f'Запрос /api/posts/{post_id}')
     return jsonify(post)
+
+
+@main_blueprint.errorhandler(404)
+def page_not_found(e):
+    # Если запрос находится в пространстве URL блога
+    if request.path.startswith('/'):
+        # то возвращаем кастомную 404 ошибку для блога
+        print("Cтатус-код 404 - страница не найдена")
+    else:
+        # в противном случае возвращаем
+        # общую 404 ошибку  для всего сайта
+        return render_template("404.html"), 404
