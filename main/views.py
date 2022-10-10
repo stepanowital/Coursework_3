@@ -10,6 +10,7 @@ api_logger2 = logging.getLogger("two")
 console_handler = logging.StreamHandler()
 file_handler = logging.FileHandler("logs/api.log")
 
+logging.basicConfig(level=logging.INFO)
 formatter_one = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s", datefmt='%d-%m-%Y %H:%M:%S')
 
 console_handler.setFormatter(formatter_one)
@@ -23,11 +24,6 @@ api_logger2.addHandler(console_handler)
 def page_index():
     posts = get_posts_all()
     return render_template("index.html", posts=posts)
-
-
-@main_blueprint.route('/<blabla>')
-def page_empty_index(blabla):
-    raise FileNotFoundError(f'Страницы с индексом "{blabla}" не существует - ошибка 404')
 
 
 @main_blueprint.route('/post/<int:postid>')
@@ -56,24 +52,22 @@ def user_page(username):
 @main_blueprint.route("/api/posts")
 def get_posts_json_page():
     data = get_posts_all()
-    api_logger.warning(f'Запрос /api/posts')
+    api_logger.info(f'Запрос /api/posts')
     return jsonify(data)
 
 
 @main_blueprint.route("/api/posts/<int:post_id>")
 def get_post_json_page(post_id):
     post = get_post_by_pk(post_id)
-    api_logger.warning(f'Запрос /api/posts/{post_id}')
+    api_logger.info(f'Запрос /api/posts/{post_id}')
     return jsonify(post)
 
 
 @main_blueprint.errorhandler(404)
 def page_not_found(e):
-    # Если запрос находится в пространстве URL блога
-    if request.path.startswith('/'):
-        # то возвращаем кастомную 404 ошибку для блога
-        print("Cтатус-код 404 - страница не найдена")
-    else:
-        # в противном случае возвращаем
-        # общую 404 ошибку  для всего сайта
-        return render_template("404.html"), 404
+    return jsonify(error=str(e)), 404
+
+
+@main_blueprint.errorhandler(500)
+def page_not_found(e):
+    return jsonify(error=str(e)), 500

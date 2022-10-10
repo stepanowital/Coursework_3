@@ -13,9 +13,6 @@ def get_posts_all():
 		print("Файл posts.json не удаётся преобразовать")
 
 
-# get_posts_all()
-
-
 def get_posts_by_user(user_name):
 	"""Возвращает все посты указанного пользователя"""
 	user_posts = []
@@ -26,10 +23,6 @@ def get_posts_by_user(user_name):
 	if not user_posts:
 		raise ValueError("Такого пользователя не существует - статус-код 500")
 	return user_posts
-
-
-# print(get_posts_by_user("leo"))
-# print(get_posts_by_user("leo")[1]['poster_name'])
 
 
 def get_comments_by_post_id(post_id):
@@ -57,9 +50,6 @@ def get_comments_by_post_id(post_id):
 	return comments_by_post_id
 
 
-# print(get_comments_by_post_id(""))
-
-
 def search_for_posts(query):
 	"""Возвращает список постов по указанному слову"""
 	posts = get_posts_all()
@@ -73,9 +63,6 @@ def search_for_posts(query):
 	return posts_query
 
 
-# print(search_for_posts(5))
-
-
 def get_post_by_pk(pk):
 	"""Возвращает пост по указанному номеру"""
 	posts = get_posts_all()
@@ -83,6 +70,3 @@ def get_post_by_pk(pk):
 		if post["pk"] == pk:
 			return post
 	return {}
-
-
-# print(get_post_by_pk(""))
