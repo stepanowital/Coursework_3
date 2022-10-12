@@ -1,6 +1,7 @@
-import logging
 from flask import Blueprint, render_template, request, jsonify
-from utils import *
+import logging
+from utils import get_posts_all, get_post_by_pk, get_comments_by_post_id, search_for_posts, get_posts_by_user
+
 main_blueprint = Blueprint('main_blueprint', __name__)
 
 

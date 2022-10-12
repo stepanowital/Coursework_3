@@ -1,10 +1,14 @@
 import json
+
+
+from config import PATH_POSTS, PATH_COMMENTS
 from json import JSONDecodeError
+
 
 def get_posts_all():
 	"""Возвращает все посты из файла posts.json"""
 	try:
-		with open("data/posts.json", "r", encoding="utf-8") as file:
+		with open(PATH_POSTS, "r", encoding="utf-8") as file:
 			posts = json.load(file)
 			return posts
 	except FileNotFoundError:
@@ -36,7 +40,7 @@ def get_comments_by_post_id(post_id):
 		raise ValueError("Такого поста не существует - статус-код 500")
 
 	try:
-		with open("data/comments.json", "r", encoding="utf-8") as file:
+		with open(PATH_COMMENTS, "r", encoding="utf-8") as file:
 			comments = json.load(file)
 	except FileNotFoundError:
 		print("Файл comments.json не найден")
