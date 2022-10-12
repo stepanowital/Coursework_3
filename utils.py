@@ -1,6 +1,4 @@
 import json
-
-
 from config import PATH_POSTS, PATH_COMMENTS
 from json import JSONDecodeError
 
@@ -25,7 +23,7 @@ def get_posts_by_user(user_name):
 		if post["poster_name"] == user_name:
 			user_posts.append(post)
 	if not user_posts:
-		raise ValueError("Такого пользователя не существует - статус-код 500")
+		raise ValueError("Ошибка 500. Такого пользователя не существует.")
 	return user_posts
 
 
@@ -37,15 +35,17 @@ def get_comments_by_post_id(post_id):
 		if post["pk"] == post_id:
 			is_post_real = True
 	if not is_post_real:
-		raise ValueError("Такого поста не существует - статус-код 500")
+		raise ValueError("Ошибка 500. Такого поста не существует.")
 
 	try:
 		with open(PATH_COMMENTS, "r", encoding="utf-8") as file:
 			comments = json.load(file)
 	except FileNotFoundError:
 		print("Файл comments.json не найден")
+		raise FileNotFoundError("Файл comments.json не найден")
 	except JSONDecodeError:
 		print("Файл comments.json не удаётся преобразовать")
+		raise TypeError("Файл comments.json не удаётся преобразовать")
 
 	comments_by_post_id = []
 	for comment in comments:
