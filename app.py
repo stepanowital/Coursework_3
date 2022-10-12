@@ -1,4 +1,5 @@
 from flask import Flask
+
 from main.views import main_blueprint
 from api.views import api_blueprint
 

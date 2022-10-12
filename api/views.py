@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify
 from utils import get_posts_all, get_post_by_pk
 from utils_logging import api_logger
 
+
 api_blueprint = Blueprint('api_blueprint', __name__)
 
 

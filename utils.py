@@ -1,4 +1,5 @@
 import json
+
 from config import PATH_POSTS, PATH_COMMENTS
 from json import JSONDecodeError
 
