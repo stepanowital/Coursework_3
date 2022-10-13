@@ -11,9 +11,9 @@ def get_posts_all():
 			posts = json.load(file)
 			return posts
 	except FileNotFoundError:
-		print("Файл posts.json не найден")
+		raise ValueError("Файл posts.json не найден или не удаётся преобразовать")
 	except JSONDecodeError:
-		print("Файл posts.json не удаётся преобразовать")
+		raise ValueError("Файл posts.json не удалось преобразовать")
 
 
 def get_posts_by_user(user_name):
